@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Add New Property" icon-name="custom:custom85">
+        <div class="slds-p-around_medium">
+
+            <lightning-input label="Property Name" data-id="Name" required></lightning-input>
+            <lightning-input label="Address" data-id="Address__c" required></lightning-input>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col"><lightning-input label="City" data-id="City__c" required></lightning-input></div>
+                <div class="slds-col"><lightning-input label="State" data-id="State__c" required></lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col"><lightning-input label="Postal Code" data-id="Postal_Code__c"
+                        required></lightning-input></div>
+                <div class="slds-col"><lightning-input label="Country" data-id="Country__c" required></lightning-input>
+                </div>
+            </div>
+
+            <lightning-combobox label="Type" data-id="Type__c" options={typeOptions} required></lightning-combobox>
+            <lightning-combobox label="Furnishing Status" data-id="Furnishing_Status__c"
+                options={furnishOptions}></lightning-combobox>
+            <lightning-combobox label="Status" data-id="Status__c" options={statusOptions}
+                required></lightning-combobox>
+
+            <lightning-input type="number" label="Rent" data-id="Rent__c" formatter="currency"
+                required></lightning-input>
+            <lightning-textarea label="Description" data-id="Description__c" required></lightning-textarea>
+
+            <!-- Custom File Input -->
+            <lightning-input type="file" label="Upload Property Image (Required)" accept="image/png, image/jpeg"
+                onchange={handleFileChange} required class="slds-m-top_small">
+            </lightning-input>
+
+            <template if:true={fileName}>
+                <p class="slds-m-top_x-small slds-text-color_success">Selected File: {fileName}</p>
+            </template>
+
+            <div class="slds-m-top_medium slds-text-align_center">
+                <lightning-button label="Save Property" variant="brand" onclick={handleSave}
+                    disabled={isLoading}></lightning-button>
+            </div>
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

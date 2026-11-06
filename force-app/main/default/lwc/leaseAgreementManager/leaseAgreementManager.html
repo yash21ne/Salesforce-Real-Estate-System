@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Lease Agreement Document" icon-name="doctype:pdf">
+        <div class="slds-p-around_medium slds-text-align_center">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Processing..."></lightning-spinner>
+            </template>
+            
+            <p class="slds-m-bottom_medium slds-text-color_weak">
+                Generate, download, or email the official lease agreement to the tenant directly.
+            </p>
+
+            <lightning-button-group>
+                <lightning-button label="Download PDF" icon-name="utility:download" variant="brand" onclick={handleDownloadPDF} disabled={isLibraryLoading}></lightning-button>
+                <lightning-button label="Send Email to Tenant" icon-name="utility:email" onclick={handleSendEmail} disabled={isLibraryLoading}></lightning-button>
+            </lightning-button-group>
+        </div>
+    </lightning-card>
+</template>

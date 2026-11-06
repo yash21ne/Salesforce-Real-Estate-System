@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Property Listings" icon-name="custom:custom85">
+        
+        <!-- Filters Section -->
+        <div class="slds-p-around_medium slds-border_bottom">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-m-bottom_small">
+                    <lightning-input type="number" label="Max Price (Rent)" data-id="maxPrice" onchange={handleFilterChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-m-bottom_small">
+                    <lightning-combobox label="Availability" data-id="availabilityStatus" options={statusOptions} onchange={handleFilterChange}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-m-bottom_small">
+                    <lightning-combobox label="Furnishing" data-id="furnishingStatus" options={furnishOptions} onchange={handleFilterChange}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-m-bottom_small">
+                    <lightning-input type="number" label="Max Distance (km)" data-id="maxDistanceKm" onchange={handleFilterChange} field-level-help="Make sure location access is allowed in your browser."></lightning-input>
+                </div>
+            </div>
+            <lightning-button label="Apply Filters" variant="brand" onclick={applyFilters} disabled={isLoading}></lightning-button>
+        </div>
+
+        <!-- Data Table Section -->
+        <div class="slds-p-around_medium" style="position:relative; min-height: 200px;">
+            <template if:true={isLoading}>
+                <lightning-spinner size="medium" alternative-text="Loading data..."></lightning-spinner>
+            </template>
+            
+            <template if:true={properties.length}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={properties}
+                    columns={columns}
+                    hide-checkbox-column="true">
+                </lightning-datatable>
+            </template>
+            <template if:false={properties.length}>
+                <div class="slds-text-align_center slds-m-top_medium">No properties found matching the criteria.</div>
+            </template>
+        </div>
+
+        <!-- Pagination Section -->
+        <div class="slds-p-around_medium slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-border_top">
+            <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrev} disabled={isFirstPage}></lightning-button>
+            <span class="slds-text-title_bold">Page {pageNumber} (Total Records: {totalRecords})</span>
+            <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext} disabled={isLastPage}></lightning-button>
+        </div>
+
+    </lightning-card>
+</template>
